@@ -1,0 +1,40 @@
+.home {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  align-items: center;
+  gap: 40px;
+  padding-top: 40px;
+}
+
+.home-text {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.home-intro {
+  font-size: 18px;
+  color: var(--muted-foreground);
+}
+
+.home-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.home-image {
+  width: 100%;
+}
+
+@media (max-width: 900px) {
+  .home {
+    grid-template-columns: 1fr;
+    padding-top: 0;
+  }
+
+  .home-image {
+    max-width: 240px;
+    justify-self: center;
+  }
+}

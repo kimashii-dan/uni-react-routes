@@ -1,0 +1,39 @@
+.products-page {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.list-header {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.list-count {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--muted-foreground);
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 900px) {
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .list-count {
+    font-size: 22px;
+  }
+
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+}

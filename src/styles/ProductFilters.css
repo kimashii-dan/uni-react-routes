@@ -1,0 +1,25 @@
+.filters {
+  display: grid;
+  grid-template-columns: 1fr 180px 180px 180px;
+  gap: 14px;
+}
+
+.filters select {
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .filters {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .filters-search {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 500px) {
+  .filters {
+    grid-template-columns: 1fr;
+  }
+}
