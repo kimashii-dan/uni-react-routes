@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
-import { useProduct } from '../hooks/useProducts.js'
+import { useDeleteProduct, useProduct } from '../hooks/useProducts.js'
 import Message from '../components/Message.jsx'
 import '../styles/ProductDetailsPage.css'
 
@@ -8,6 +8,7 @@ function ProductDetailsPage() {
   const navigate = useNavigate()
   const location = useLocation()
   const { product, loading, error } = useProduct(id)
+  const { deleteProduct, deleting, deleteError } = useDeleteProduct()
 
   let content
   if (loading) {
@@ -59,7 +60,13 @@ function ProductDetailsPage() {
         <Link to="/products" className="button button-secondary">
           All products
         </Link>
+        {product && (
+          <button className="button button-secondary" disabled={deleting} onClick={() => deleteProduct(id, { onSuccess: () => navigate('/products') })}>
+            Delete
+          </button>
+        )}
       </div>
+      {deleteError && <Message type="error">{deleteError}</Message>}
       {content}
     </div>
   )

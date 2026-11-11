@@ -1,16 +1,19 @@
-# React + Vite
+# Product Catalog
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React + Vite + React Router app with Firebase Authentication and TanStack Query caching.
 
-Currently, two official plugins are available:
+## Setup
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+1. Copy `.env.example` to `.env.local` and fill in your Firebase web app config.
+2. `npm install`
+3. `npm run dev`
 
-## React Compiler
+## Caching strategy
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Server data is cached with TanStack Query using the keys `['products']` (product list) and `['products', id]` (single product).
+- Cached data stays fresh for 5 minutes (`staleTime`). After that it is revalidated in the background on remount or window focus. Unused entries are removed after 5 minutes (`gcTime`).
+- Each request receives an `AbortSignal`, and each product has its own key. This means outdated requests are cancelled and never overwrite newer results.
 
-## Expanding the ESLint configuration
+## Invalidation
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+After a product is deleted (Delete button on the product details page), all `['products']` queries are invalidated and refetched. DummyJSON only simulates deletes, so the refetched data still contains the product.

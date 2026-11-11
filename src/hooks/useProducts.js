@@ -1,27 +1,30 @@
-import { useEffect, useState } from 'react'
-import { getProduct, getProducts } from '../services/service.js'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { deleteProduct, getProduct, getProducts } from '../services/service.js'
 
 export function useProducts() {
-  const [state, setState] = useState({ loaded: false, data: [], error: null })
+  const { data, isPending, error } = useQuery({
+    queryKey: ['products'],
+    queryFn: ({ signal }) => getProducts(signal),
+  })
 
-  useEffect(() => {
-    getProducts()
-      .then((data) => setState({ loaded: true, data, error: null }))
-      .catch((error) => setState({ loaded: true, data: [], error: error.message }))
-  }, [])
-
-  return { products: state.data, loading: !state.loaded, error: state.error }
+  return { products: data ?? [], loading: isPending, error: error?.message }
 }
 
 export function useProduct(id) {
-  const [results, setResults] = useState({})
+  const { data, isPending, error } = useQuery({
+    queryKey: ['products', id],
+    queryFn: ({ signal }) => getProduct(id, signal),
+  })
 
-  useEffect(() => {
-    getProduct(id)
-      .then((data) => setResults((prev) => ({ ...prev, [id]: { data } })))
-      .catch((error) => setResults((prev) => ({ ...prev, [id]: { error: error.message } })))
-  }, [id])
+  return { product: data, loading: isPending, error: error?.message }
+}
 
-  const result = results[id]
-  return { product: result?.data, loading: !result, error: result?.error }
+export function useDeleteProduct() {
+  const queryClient = useQueryClient()
+  const { mutate, isPending, error } = useMutation({
+    mutationFn: deleteProduct,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['products'] }),
+  })
+
+  return { deleteProduct: mutate, deleting: isPending, deleteError: error?.message }
 }
