@@ -2,6 +2,8 @@ import { Suspense, useEffect } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 import NavBar from '../components/NavBar.jsx'
 import Message from '../components/Message.jsx'
+import NetworkStatus from '../components/NetworkStatus.jsx'
+import UpdatePrompt from '../components/UpdatePrompt.jsx'
 
 function RootLayout() {
   const { pathname } = useLocation()
@@ -14,6 +16,8 @@ function RootLayout() {
     <>
       <NavBar />
       <main className="container">
+        <NetworkStatus />
+        <UpdatePrompt />
         <Suspense fallback={<Message type="loading">Loading page...</Message>}>
           <Outlet />
         </Suspense>

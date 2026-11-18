@@ -219,6 +219,35 @@ textarea::placeholder {
   align-items: flex-start;
 }
 
+.network-status {
+  margin-bottom: 16px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.network-online {
+  color: var(--accent);
+}
+
+.network-offline {
+  color: var(--warning);
+}
+
+.update-prompt {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding: 14px 18px;
+  font-weight: 600;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow-base);
+}
+
 @media (max-width: 500px) {
   .panel {
     padding: 24px 20px;

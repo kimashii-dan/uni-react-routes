@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext.js'
 import '../styles/NavBar.css'
@@ -5,6 +6,7 @@ import '../styles/NavBar.css'
 function NavBar() {
   const { user, loading, logout } = useAuth()
   const navigate = useNavigate()
+  const [open, setOpen] = useState(false)
 
   async function handleLogout() {
     await logout()
@@ -14,10 +16,18 @@ function NavBar() {
   return (
     <header className="header">
       <nav className="header-nav">
-        <Link to="/" className="header-logo">
+        <Link to="/" className="header-logo" onClick={() => setOpen(false)}>
           Product Catalog
         </Link>
-        <div className="header-links">
+        <button
+          className="button button-secondary header-toggle"
+          aria-label="Toggle menu"
+          aria-expanded={open}
+          onClick={() => setOpen(!open)}
+        >
+          {open ? '✕' : '☰'}
+        </button>
+        <div className={`header-links${open ? ' open' : ''}`} onClick={() => setOpen(false)}>
           <NavLink to="/" end className="header-link">
             Home
           </NavLink>

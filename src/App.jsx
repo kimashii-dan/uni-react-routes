@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom'
 import RootLayout from './layouts/RootLayout.jsx'
 import HomePage from './pages/HomePage.jsx'
 import NotFoundPage from './pages/NotFoundPage.jsx'
+import OfflinePage from './pages/OfflinePage.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx'
 
 const AboutPage = lazy(() => import('./pages/AboutPage.jsx'))
@@ -26,6 +27,7 @@ function App() {
         <Route path="dashboard" element={<DashboardPage />} />
         <Route path="login" element={<LoginPage />} />
         <Route path="signup" element={<SignupPage />} />
+        <Route path="offline" element={<OfflinePage />} />
         <Route element={<ProtectedRoute />}>
           <Route path="profile" element={<ProfilePage />} />
         </Route>

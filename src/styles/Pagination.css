@@ -24,4 +24,8 @@
   .pagination {
     gap: 12px;
   }
+
+  .pagination .button {
+    padding: 10px 12px;
+  }
 }
